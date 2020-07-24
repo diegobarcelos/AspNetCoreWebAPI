@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,14 +31,18 @@ namespace SmartSchool.WebAPI
             services.AddDbContext<SmartContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
-
-            //services.AddSingleton<IRepository, Repository>();
-            //services.AddTransient<IRepository, Repository>();
-            services.AddScoped<IRepository, Repository>();
-
             services.AddControllers()
                     .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = 
                                            Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            //DotNet Core 2.2 - Não precisa passar parâmetros
+            //services.AddAutoMapper();
+
+            //DotNet Core 3.1
+            //Precisa do parâmetro
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

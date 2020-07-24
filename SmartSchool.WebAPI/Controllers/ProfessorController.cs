@@ -4,7 +4,7 @@ namespace SmartSchool.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]    
-    public class ProfessorController :ControllerBase
+    public class ProfessorController : ControllerBase
     {
         public ProfessorController()
         {
